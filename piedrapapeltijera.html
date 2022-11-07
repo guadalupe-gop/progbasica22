@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Piedra,Papel o Tijera</title>
     <script>
+      function aleatorio(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
+
       let jugador = 0;
-      let pc = 2;
+      let pc = aleatorio(1, 3);
       jugador = parseInt(prompt("Elige: 1 piedra, 2 papel, 3 tijera"));
 
       if (jugador === 1) {
@@ -29,8 +33,8 @@
       } else {
         alert("Opción no valido");
       }
-      //   COMBATE
 
+      //   COMBATE
       if (jugador === pc) {
         alert("EMPATE");
       } else if (jugador - pc === 1) {
