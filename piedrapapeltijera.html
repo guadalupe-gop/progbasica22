@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piedra,Papel o Tijera</title>
+    <script>
+      let jugador = 0;
+      let pc = 2;
+      jugador = parseInt(prompt("Elige: 1 piedra, 2 papel, 3 tijera"));
+
+      if (jugador === 1) {
+        alert("Escogiste: ✊");
+      } else if (jugador === 2) {
+        alert("Escogiste: ✋");
+      } else if (jugador === 3) {
+        alert("Escogiste: ✌");
+      } else {
+        alert("Opción no valido");
+      }
+
+      if (pc === 1) {
+        alert("pc elige: ✊");
+      } else if (pc === 2) {
+        alert("pc elige: ✋");
+      } else if (pc === 3) {
+        alert("pc elige: ✌");
+      } else {
+        alert("Opción no valido");
+      }
+      //   COMBATE
+
+      if (jugador === pc) {
+        alert("EMPATE");
+      } else if (jugador - pc === 1) {
+        alert("GANASTE");
+      } else if (jugador - pc === -2) {
+        alert(" GANASTE");
+      } else {
+        alert("PERDISTE");
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Piedra, Papel o Tijera</h1>
+  </body>
+</html>
