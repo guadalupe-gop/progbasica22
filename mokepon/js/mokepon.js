@@ -3,22 +3,43 @@ function iniciarJuego() {
   botonPeleadorJugador.addEventListener("click", seleccionarPeleadorJugador);
 }
 function seleccionarPeleadorJugador() {
+  let jugar = 1;
   let inputCoku = document.getElementById("coku");
   let inputVegeto = document.getElementById("vegeto");
   let inputMarioBuu = document.getElementById("mariobuu");
-  let jugadorParticipante = document.getElementById("participante-judagor");
+  let spanJugadorParticipante = document.getElementById("participante-judagor");
   if (inputCoku.checked) {
-    alert("Seleccionaste a Coku");
-    jugadorParticipante.innerHTML = "Coku";
+    spanJugadorParticipante.innerHTML = "Coku";
   } else if (inputVegeto.checked) {
-    alert("Seleccionaste a Vegeto");
-    jugadorParticipante.innerHTML = "Vegeto";
+    spanJugadorParticipante.innerHTML = "Vegeto";
   } else if (inputMarioBuu.checked) {
-    alert("Seleccionaste a Mario Buu");
-    jugadorParticipante.innerHTML = "Mario Buu";
+    spanJugadorParticipante.innerHTML = "Mario Buu";
   } else {
     alert("Selecciona una Opción");
+    jugar = 0;
   }
+  if (jugar == 1) {
+    seleccionarPeleadorEnemigo();
+  }
+}
+
+function seleccionarPeleadorEnemigo() {
+  let spanPeleadorEnemigo = document.getElementById("participante-enemigo");
+  let ataqueAleatorio = aleatorio(1, 3);
+  if (ataqueAleatorio === 1) {
+    //Coku
+    spanPeleadorEnemigo.innerHTML = "Coku";
+  } else if (ataqueAleatorio === 2) {
+    //Vegeto
+    spanPeleadorEnemigo.innerHTML = "Vegeto";
+  } else if (ataqueAleatorio === 3) {
+    //Mario Buu
+    spanPeleadorEnemigo.innerHTML = "Mario Buu";
+  }
+}
+
+function aleatorio(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + 1);
 }
 
 window.addEventListener("load", iniciarJuego);
