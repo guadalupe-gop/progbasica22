@@ -1,6 +1,15 @@
+let ataqueJugador;
+
 function iniciarJuego() {
   let botonPeleadorJugador = document.getElementById("seleccionar-peleador");
   botonPeleadorJugador.addEventListener("click", seleccionarPeleadorJugador);
+
+  let botonBankoku = document.getElementById("boton-bankoku");
+  botonBankoku.addEventListener("click", ataqueBankoku);
+  let botonBigBang = document.getElementById("boton-bigbang");
+  botonBigBang.addEventListener("click", ataqueBigBang);
+  let botonZetsumetsu = document.getElementById("boton-zetsumetsu");
+  botonZetsumetsu.addEventListener("click", ataqueZetsumetsu);
 }
 function seleccionarPeleadorJugador() {
   let jugar = 1;
@@ -36,6 +45,19 @@ function seleccionarPeleadorEnemigo() {
     //Mario Buu
     spanPeleadorEnemigo.innerHTML = "Mario Buu";
   }
+}
+
+function ataqueBankoku() {
+  ataqueJugador = "Bankoku";
+  console.log(ataqueJugador);
+}
+function ataqueBigBang() {
+  ataqueJugador = "BigBang";
+  console.log(ataqueJugador);
+}
+function ataqueZetsumetsu() {
+  ataqueJugador = "Zetsumetsu";
+  console.log(ataqueJugador);
 }
 
 function aleatorio(min, max) {
