@@ -1,4 +1,5 @@
 let ataqueJugador;
+let ataqueEnemigo;
 
 function iniciarJuego() {
   let botonPeleadorJugador = document.getElementById("seleccionar-peleador");
@@ -33,15 +34,16 @@ function seleccionarPeleadorJugador() {
 }
 
 function seleccionarPeleadorEnemigo() {
+  let peleadorAleatorio = aleatorio(1, 3);
   let spanPeleadorEnemigo = document.getElementById("participante-enemigo");
-  let ataqueAleatorio = aleatorio(1, 3);
-  if (ataqueAleatorio === 1) {
+
+  if (peleadorAleatorio === 1) {
     //Coku
     spanPeleadorEnemigo.innerHTML = "Coku";
-  } else if (ataqueAleatorio === 2) {
+  } else if (peleadorAleatorio === 2) {
     //Vegeto
     spanPeleadorEnemigo.innerHTML = "Vegeto";
-  } else if (ataqueAleatorio === 3) {
+  } else if (peleadorAleatorio === 3) {
     //Mario Buu
     spanPeleadorEnemigo.innerHTML = "Mario Buu";
   }
@@ -49,15 +51,27 @@ function seleccionarPeleadorEnemigo() {
 
 function ataqueBankoku() {
   ataqueJugador = "Bankoku";
-  console.log(ataqueJugador);
+  ataqueAleatorioEnemigo();
 }
 function ataqueBigBang() {
   ataqueJugador = "BigBang";
-  console.log(ataqueJugador);
+  ataqueAleatorioEnemigo();
 }
 function ataqueZetsumetsu() {
   ataqueJugador = "Zetsumetsu";
-  console.log(ataqueJugador);
+  ataqueAleatorioEnemigo();
+}
+
+function ataqueAleatorioEnemigo() {
+  let ataqueAleatorio = aleatorio(1, 3);
+
+  if (ataqueAleatorio === 1) {
+    ataqueEnemigo = "Bankoku";
+  } else if (ataqueAleatorio === 2) {
+    ataqueEnemigo = "Bing Bang";
+  } else {
+    ataqueEnemigo = "Zetsumetsu";
+  }
 }
 
 function aleatorio(min, max) {
