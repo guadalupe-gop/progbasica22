@@ -72,6 +72,15 @@ function ataqueAleatorioEnemigo() {
   } else {
     ataqueEnemigo = "Zetsumetsu";
   }
+  crearMensaje();
+}
+
+function crearMensaje() {
+  let sectionMensajes = document.getElementById("mensajes");
+  let parrafo = document.createElement("p");
+  parrafo.innerHTML = `Tu peleador número 54 atacó con ${ataqueJugador},El peleador enemigo número 84
+  atacó con ${ataqueEnemigo} - GANADOR PENDIENTE`;
+  sectionMensajes.appendChild(parrafo);
 }
 
 function aleatorio(min, max) {
