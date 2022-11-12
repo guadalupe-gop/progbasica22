@@ -68,18 +68,36 @@ function ataqueAleatorioEnemigo() {
   if (ataqueAleatorio === 1) {
     ataqueEnemigo = "Bankoku";
   } else if (ataqueAleatorio === 2) {
-    ataqueEnemigo = "Bing Bang";
+    ataqueEnemigo = "BingBang";
   } else {
     ataqueEnemigo = "Zetsumetsu";
   }
-  crearMensaje();
+  combate();
 }
 
-function crearMensaje() {
+function combate() {
+  // 1-Bankoku
+  // 2-BigBang
+  // 3-Zetusmetsu
+  //   COMBATE
+  if (ataqueJugador === ataqueEnemigo) {
+    crearMensaje("EMPATE");
+  } else if (ataqueJugador === "Bankoku" && ataqueEnemigo === "Zetsumetsu") {
+    crearMensaje("GANASTE");
+  } else if (ataqueJugador === "BingBang" && ataqueEnemigo === "Bankoku") {
+    crearMensaje("GANASTE");
+  } else if (ataqueJugador === "Zetsumetsu" && ataqueEnemigo === "BingBang") {
+    crearMensaje("GANASTE");
+  } else {
+    crearMensaje("PERDISTE");
+  }
+}
+
+function crearMensaje(resultado) {
   let sectionMensajes = document.getElementById("mensajes");
   let parrafo = document.createElement("p");
   parrafo.innerHTML = `Tu peleador número 54 atacó con ${ataqueJugador},El peleador enemigo número 84
-  atacó con ${ataqueEnemigo} - GANADOR PENDIENTE`;
+  atacó con ${ataqueEnemigo} - ${resultado}`;
   sectionMensajes.appendChild(parrafo);
 }
 
