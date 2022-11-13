@@ -1,5 +1,7 @@
 let ataqueJugador;
 let ataqueEnemigo;
+let vidasJugador = 3;
+let vidasEnemigo = 3;
 
 function iniciarJuego() {
   let botonPeleadorJugador = document.getElementById("seleccionar-peleador");
@@ -68,7 +70,7 @@ function ataqueAleatorioEnemigo() {
   if (ataqueAleatorio === 1) {
     ataqueEnemigo = "Bankoku";
   } else if (ataqueAleatorio === 2) {
-    ataqueEnemigo = "BingBang";
+    ataqueEnemigo = "BigBang";
   } else {
     ataqueEnemigo = "Zetsumetsu";
   }
@@ -76,20 +78,31 @@ function ataqueAleatorioEnemigo() {
 }
 
 function combate() {
+  //   COMBATE
   // 1-Bankoku
   // 2-BigBang
   // 3-Zetusmetsu
-  //   COMBATE
+  let spanVidasJugador = document.getElementById("vidas-jugador");
+  let spanVidasEnemigo = document.getElementById("vidas-enemigo");
+
   if (ataqueJugador === ataqueEnemigo) {
     crearMensaje("EMPATE");
   } else if (ataqueJugador === "Bankoku" && ataqueEnemigo === "Zetsumetsu") {
     crearMensaje("GANASTE");
-  } else if (ataqueJugador === "BingBang" && ataqueEnemigo === "Bankoku") {
+    vidasEnemigo--;
+    spanVidasEnemigo.innerHTML = vidasEnemigo;
+  } else if (ataqueJugador === "BigBang" && ataqueEnemigo === "Bankoku") {
     crearMensaje("GANASTE");
-  } else if (ataqueJugador === "Zetsumetsu" && ataqueEnemigo === "BingBang") {
+    vidasEnemigo--;
+    spanVidasEnemigo.innerHTML = vidasEnemigo;
+  } else if (ataqueJugador === "Zetsumetsu" && ataqueEnemigo === "BigBang") {
     crearMensaje("GANASTE");
+    vidasEnemigo--;
+    spanVidasEnemigo.innerHTML = vidasEnemigo;
   } else {
     crearMensaje("PERDISTE");
+    vidasJugador--;
+    spanVidasJugador.innerHTML = vidasJugador;
   }
 }
 
