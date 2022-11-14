@@ -104,6 +104,16 @@ function combate() {
     vidasJugador--;
     spanVidasJugador.innerHTML = vidasJugador;
   }
+
+  revisarVidas();
+}
+
+function revisarVidas() {
+  if (vidasEnemigo === 0) {
+    crearMensajeFinal("🎉 GANASTE 🎉");
+  } else if (vidasJugador === 0) {
+    crearMensajeFinal("Lo siento, Perdiste 🎭");
+  }
 }
 
 function crearMensaje(resultado) {
@@ -111,6 +121,13 @@ function crearMensaje(resultado) {
   let parrafo = document.createElement("p");
   parrafo.innerHTML = `Tu peleador número 54 atacó con ${ataqueJugador},El peleador enemigo número 84
   atacó con ${ataqueEnemigo} - ${resultado}`;
+  sectionMensajes.appendChild(parrafo);
+}
+
+function crearMensajeFinal(resultadoFinal) {
+  let sectionMensajes = document.getElementById("mensajes");
+  let parrafo = document.createElement("p");
+  parrafo.innerHTML = resultadoFinal;
   sectionMensajes.appendChild(parrafo);
 }
 
