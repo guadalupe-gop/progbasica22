@@ -4,8 +4,14 @@ let vidasJugador = 3;
 let vidasEnemigo = 3;
 
 function iniciarJuego() {
+  let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque");
+  sectionSeleccionarAtaque.style.display = "none";
+
   let botonPeleadorJugador = document.getElementById("seleccionar-peleador");
   botonPeleadorJugador.addEventListener("click", seleccionarPeleadorJugador);
+
+  let sectionReiniciar = document.getElementById("reiniciar");
+  sectionReiniciar.style.display = "none";
 
   let botonBankoku = document.getElementById("boton-bankoku");
   botonBankoku.addEventListener("click", ataqueBankoku);
@@ -13,13 +19,25 @@ function iniciarJuego() {
   botonBigBang.addEventListener("click", ataqueBigBang);
   let botonZetsumetsu = document.getElementById("boton-zetsumetsu");
   botonZetsumetsu.addEventListener("click", ataqueZetsumetsu);
+
+  let botonReiniciar = document.getElementById("boton-reiniciar");
+  botonReiniciar.addEventListener("click", reiniciarJuego);
 }
 function seleccionarPeleadorJugador() {
   let jugar = 1;
+  let sectionSeleccionarPeleador = document.getElementById(
+    "seleccionar-jugador"
+  );
+  sectionSeleccionarPeleador.style.display = "none";
+
+  let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque");
+  sectionSeleccionarAtaque.style.display = "block";
+
   let inputCoku = document.getElementById("coku");
   let inputVegeto = document.getElementById("vegeto");
   let inputMarioBuu = document.getElementById("mariobuu");
   let spanJugadorParticipante = document.getElementById("participante-judagor");
+
   if (inputCoku.checked) {
     spanJugadorParticipante.innerHTML = "Coku";
   } else if (inputVegeto.checked) {
@@ -129,6 +147,21 @@ function crearMensajeFinal(resultadoFinal) {
   let parrafo = document.createElement("p");
   parrafo.innerHTML = resultadoFinal;
   sectionMensajes.appendChild(parrafo);
+
+  // Desactiva botones ataque
+  let botonBankoku = document.getElementById("boton-bankoku");
+  botonBankoku.disabled = true;
+  let botonBigBang = document.getElementById("boton-bigbang");
+  botonBigBang.disabled = true;
+  let botonZetsumetsu = document.getElementById("boton-zetsumetsu");
+  botonZetsumetsu.disabled = true;
+
+  let sectionReiniciar = document.getElementById("reiniciar");
+  sectionReiniciar.style.display = "block";
+}
+
+function reiniciarJuego() {
+  location.reload();
 }
 
 function aleatorio(min, max) {
