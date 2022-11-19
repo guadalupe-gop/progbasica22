@@ -6,27 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="./js/mokepon.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <h1>Dragon Ball Z</h1>
     <section id="seleccionar-jugador">
-      <h2>Elige tu peleador</h2>
+      <img src="./images/dragonballZ.png" alt="dragon ball Z" width="200" />
+      <h2 class="subtitulo">Elige tu peleador:</h2>
 
-      <label for="coku">
-        <img src="./images/Son_Goku.webp" alt="coku" width="70" />
-        Coku</label
-      >
-      <input type="radio" name="dragon" id="coku" />
-      <label for="vegeto">
-        <img src="./images/Vegeta.webp" alt="vegeto" width="60" />
-        Vegeto</label
-      >
-      <input type="radio" name="dragon" id="vegeto" />
-      <label for="mariobuu">
-        <img src="./images/majin buu.webp" alt="mariobuu" width="80" />
-        Mario Buu</label
-      >
-      <input type="radio" name="dragon" id="mariobuu" />
+      <div class="tarjetas">
+        <input type="radio" name="dragon" id="goku" />
+        <label class="tarjeta-dragon-ball" for="goku">
+          <p>Goku</p>
+          <img src="./images/Son_Goku.webp" alt="goku" width="70" />
+        </label>
+        <input type="radio" name="dragon" id="vegeta" />
+        <label class="tarjeta-dragon-ball" for="vegeta">
+          <p>Vegeta</p>
+          <img src="./images/Vegeta.webp" alt="vegeta" width="60" />
+        </label>
+        <input type="radio" name="dragon" id="majinbu" />
+        <label class="tarjeta-dragon-ball" for="majinbu">
+          <p>Buu</p>
+          <img src="./images/majin buu.webp" alt="Majin Bu" width="75" />
+        </label>
+      </div>
       <!-- <label for="ceil">
         <img src="./images/cell-perfecto.webp" width="80" alt="ceil" />
         ceil
@@ -35,26 +38,41 @@
 
       <!-- Coku -> Bankoku Vegeto -> Big Bang Mario BUU ->Jinrui Zetsumetsu Ceil ->Ki
       no Tsurugi Freezer -> Death Ball -->
-      <button id="seleccionar-peleador">Seleccionar</button>
+      <button class="boton-seleccionar" id="seleccionar-peleador">
+        Seleccionar
+      </button>
     </section>
     <section id="seleccionar-ataque">
-      <p id="participanteJugador">
-        El participante <span id="participante-judagor"></span> tiene
-        <span id="vidas-jugador">3</span> vidas
-      </p>
-      <p>
-        El participante <span id="participante-enemigo"></span> tiene
-        <span id="vidas-enemigo">3</span> vidas
-      </p>
-      <p>
-        <button id="boton-bankoku">Bankoku 🔥</button>
-        <button id="boton-bigbang">Big Bang 💧</button>
-        <button id="boton-zetsumetsu">Zetsumetsu 🌱</button>
-      </p>
-    </section>
-    <section id="mensajes"></section>
-    <section id="reiniciar">
-      <button id="boton-reiniciar">Reiniciar Juego</button>
+      <img src="./images/dragonballZ.png" alt="dragon ball Z" width="200" />
+      <h2>Elige tu ataque:</h2>
+
+      <div class="botones-ataques">
+        <button id="boton-bankoku" class="boton-de-ataque">Bankoku 🔥</button>
+        <button id="boton-bigbang" class="boton-de-ataque">Big Bang 💧</button>
+        <button id="boton-zetsumetsu" class="boton-de-ataque">
+          Zetsumetsu 🌱
+        </button>
+      </div>
+
+      <section id="mensajes">
+        <p id="resultado">Mucha suerte</p>
+        <div id="reiniciar">
+          <button id="boton-reiniciar">Reiniciar Juego</button>
+        </div>
+      </section>
+
+      <div class="ataques">
+        <div class="ataques-jugador">
+          <p id="vidas-jugador">3</p>
+          <p id="participante-judagor"></p>
+          <div id="ataque-del-jugador"></div>
+        </div>
+        <div class="ataques-enemigo">
+          <span id="vidas-enemigo">3</span>
+          <p id="participante-enemigo"></p>
+          <div id="ataque-del-enemigo"></div>
+        </div>
+      </div>
     </section>
   </body>
 </html>

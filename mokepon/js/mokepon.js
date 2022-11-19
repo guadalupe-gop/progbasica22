@@ -31,19 +31,19 @@ function seleccionarPeleadorJugador() {
   sectionSeleccionarPeleador.style.display = "none";
 
   let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque");
-  sectionSeleccionarAtaque.style.display = "block";
+  sectionSeleccionarAtaque.style.display = "flex";
 
-  let inputCoku = document.getElementById("coku");
-  let inputVegeto = document.getElementById("vegeto");
-  let inputMarioBuu = document.getElementById("mariobuu");
+  let inputCoku = document.getElementById("goku");
+  let inputVegeto = document.getElementById("vegeta");
+  let inputMarioBuu = document.getElementById("majinbu");
   let spanJugadorParticipante = document.getElementById("participante-judagor");
 
   if (inputCoku.checked) {
-    spanJugadorParticipante.innerHTML = "Coku";
+    spanJugadorParticipante.innerHTML = "Goku";
   } else if (inputVegeto.checked) {
-    spanJugadorParticipante.innerHTML = "Vegeto";
+    spanJugadorParticipante.innerHTML = "Vegeta";
   } else if (inputMarioBuu.checked) {
-    spanJugadorParticipante.innerHTML = "Mario Buu";
+    spanJugadorParticipante.innerHTML = "Majin Buu";
   } else {
     alert("Selecciona una Opción");
     jugar = 0;
@@ -59,13 +59,13 @@ function seleccionarPeleadorEnemigo() {
 
   if (peleadorAleatorio === 1) {
     //Coku
-    spanPeleadorEnemigo.innerHTML = "Coku";
+    spanPeleadorEnemigo.innerHTML = "Goku";
   } else if (peleadorAleatorio === 2) {
     //Vegeto
-    spanPeleadorEnemigo.innerHTML = "Vegeto";
+    spanPeleadorEnemigo.innerHTML = "Vegeta";
   } else if (peleadorAleatorio === 3) {
     //Mario Buu
-    spanPeleadorEnemigo.innerHTML = "Mario Buu";
+    spanPeleadorEnemigo.innerHTML = "Majin Buu";
   }
 }
 
@@ -135,18 +135,25 @@ function revisarVidas() {
 }
 
 function crearMensaje(resultado) {
-  let sectionMensajes = document.getElementById("mensajes");
-  let parrafo = document.createElement("p");
-  parrafo.innerHTML = `Tu peleador número 54 atacó con ${ataqueJugador},El peleador enemigo número 84
-  atacó con ${ataqueEnemigo} - ${resultado}`;
-  sectionMensajes.appendChild(parrafo);
+  let sectionMensajes = document.getElementById("resultado");
+  let ataqueDelJugador = document.getElementById("ataque-del-jugador");
+  let ataqueDelEnemigo = document.getElementById("ataque-del-enemigo");
+
+  let nuevoAtaqueDelJugador = document.createElement("p");
+  let nuevoAtaqueDelEnemigo = document.createElement("p");
+
+  sectionMensajes.innerHTML = resultado;
+  nuevoAtaqueDelJugador.innerHTML = ataqueJugador;
+  nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo;
+
+  ataqueDelJugador.appendChild(nuevoAtaqueDelJugador);
+  ataqueDelEnemigo.appendChild(nuevoAtaqueDelEnemigo);
 }
 
 function crearMensajeFinal(resultadoFinal) {
-  let sectionMensajes = document.getElementById("mensajes");
-  let parrafo = document.createElement("p");
-  parrafo.innerHTML = resultadoFinal;
-  sectionMensajes.appendChild(parrafo);
+  let sectionMensajes = document.getElementById("resultado");
+  sectionMensajes.innerHTML = resultadoFinal;
+  // sectionMensajes.appendChild(parrafo);
 
   // Desactiva botones ataque
   let botonBankoku = document.getElementById("boton-bankoku");
