@@ -30,7 +30,10 @@ let vidasEnemigo = 3;
 
 class Combatiente {
   constructor(nombre, foto, vida) {
-    (this.nombre = nombre), (this.foto = foto), (this.vida = vida);
+    (this.nombre = nombre),
+      (this.foto = foto),
+      (this.vida = vida),
+      (this.ataques = []);
   }
 }
 
@@ -38,7 +41,74 @@ let goku = new Combatiente("Goku", "./images/Son_Goku.webp", 5);
 let vegeta = new Combatiente("Vegeta", "./images/Vegeta.webp", 5);
 let majinbu = new Combatiente("MajinBuu", "./images/majin buu.webp", 5);
 
-combatientesZ.push(goku, vegeta, majinbu);
+goku.ataques.push(
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  },
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  },
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  },
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  }
+);
+
+vegeta.ataques.push(
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  },
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  }
+);
+
+majinbu.ataques.push(
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  },
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  },
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  },
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  }
+);
 
 function iniciarJuego() {
   sectionSeleccionarAtaque.style.display = "none";
