@@ -22,6 +22,7 @@ const sectionMensajes = document.getElementById("resultado");
 const ataqueDelJugador = document.getElementById("ataque-del-jugador");
 const ataqueDelEnemigo = document.getElementById("ataque-del-enemigo");
 
+let combatientesZ = [];
 let ataqueJugador;
 let ataqueEnemigo;
 let vidasJugador = 3;
@@ -36,6 +37,8 @@ class Combatiente {
 let goku = new Combatiente("Goku", "./images/Son_Goku.webp", 5);
 let vegeta = new Combatiente("Vegeta", "./images/Vegeta.webp", 5);
 let majinbu = new Combatiente("MajinBuu", "./images/majin buu.webp", 5);
+
+combatientesZ.push(goku, vegeta, majinbu);
 
 function iniciarJuego() {
   sectionSeleccionarAtaque.style.display = "none";
