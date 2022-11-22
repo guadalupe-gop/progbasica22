@@ -27,6 +27,16 @@ let ataqueEnemigo;
 let vidasJugador = 3;
 let vidasEnemigo = 3;
 
+class Combatiente {
+  constructor(nombre, foto, vida) {
+    (this.nombre = nombre), (this.foto = foto), (this.vida = vida);
+  }
+}
+
+let goku = new Combatiente("Goku", "./images/Son_Goku.webp", 5);
+let vegeta = new Combatiente("Vegeta", "./images/Vegeta.webp", 5);
+let majinbu = new Combatiente("MajinBuu", "./images/majin buu.webp", 5);
+
 function iniciarJuego() {
   sectionSeleccionarAtaque.style.display = "none";
   botonPeleadorJugador.addEventListener("click", seleccionarPeleadorJugador);
