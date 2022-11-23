@@ -1,9 +1,6 @@
 const sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque");
 const botonPeleadorJugador = document.getElementById("seleccionar-peleador");
 const sectionReiniciar = document.getElementById("reiniciar");
-const botonBankoku = document.getElementById("boton-bankoku");
-const botonBigBang = document.getElementById("boton-bigbang");
-const botonZetsumetsu = document.getElementById("boton-zetsumetsu");
 const botonReiniciar = document.getElementById("boton-reiniciar");
 
 const sectionSeleccionarPeleador = document.getElementById(
@@ -19,14 +16,20 @@ const sectionMensajes = document.getElementById("resultado");
 const ataqueDelJugador = document.getElementById("ataque-del-jugador");
 const ataqueDelEnemigo = document.getElementById("ataque-del-enemigo");
 const contenedorTarjetas = document.getElementById("contenedorTarjetas");
+const contenedorAtaques = document.getElementById("contenedorAtaques");
 
 let inputCoku;
 let inputVegeto;
 let inputMarioBuu;
+let botonBankoku;
+let botonBigBang;
+let botonZetsumetsu;
 let combatientesZ = [];
 let ataqueJugador;
 let ataqueEnemigo;
 let opcionDeCombatiente;
+let opcionDeAtaquesCombatiente;
+let peleadorSeleccionado;
 let vidasJugador = 3;
 let vidasEnemigo = 3;
 
@@ -136,9 +139,6 @@ function iniciarJuego() {
   botonPeleadorJugador.addEventListener("click", seleccionarPeleadorJugador);
   sectionReiniciar.style.display = "none";
 
-  botonBankoku.addEventListener("click", ataqueBankoku);
-  botonBigBang.addEventListener("click", ataqueBigBang);
-  botonZetsumetsu.addEventListener("click", ataqueZetsumetsu);
   botonReiniciar.addEventListener("click", reiniciarJuego);
 }
 
@@ -149,17 +149,49 @@ function seleccionarPeleadorJugador() {
 
   if (inputCoku.checked) {
     spanJugadorParticipante.innerHTML = inputCoku.id;
+    peleadorSeleccionado = inputCoku.id;
   } else if (inputVegeto.checked) {
     spanJugadorParticipante.innerHTML = inputVegeto.id;
+    peleadorSeleccionado = inputVegeto.id;
   } else if (inputMarioBuu.checked) {
     spanJugadorParticipante.innerHTML = inputMarioBuu.id;
+    peleadorSeleccionado = inputMarioBuu.id;
   } else {
     alert("Selecciona una Opción");
     jugar = 0;
   }
   if (jugar == 1) {
+    extraerAtaques(peleadorSeleccionado);
     seleccionarPeleadorEnemigo();
   }
+}
+
+function extraerAtaques(peleadorSeleccionado) {
+  let ataques;
+
+  combatientesZ.forEach((combatiente) => {
+    if (peleadorSeleccionado === combatiente.nombre) {
+      ataques = combatiente.ataques;
+    }
+  });
+
+  mostrarAtaques(ataques);
+}
+
+function mostrarAtaques(ataques) {
+  ataques.forEach((ataque) => {
+    opcionDeAtaquesCombatiente = `
+    <button id=${ataque.id} class="boton-de-ataque">${ataque.nombre}</button>`;
+    contenedorAtaques.innerHTML += opcionDeAtaquesCombatiente;
+  });
+
+  botonBankoku = document.getElementById("boton-bankoku");
+  botonBigBang = document.getElementById("boton-bigbang");
+  botonZetsumetsu = document.getElementById("boton-zetsumetsu");
+
+  botonBankoku.addEventListener("click", ataqueBankoku);
+  botonBigBang.addEventListener("click", ataqueBigBang);
+  botonZetsumetsu.addEventListener("click", ataqueZetsumetsu);
 }
 
 function seleccionarPeleadorEnemigo() {
