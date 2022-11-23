@@ -163,18 +163,9 @@ function seleccionarPeleadorJugador() {
 }
 
 function seleccionarPeleadorEnemigo() {
-  let peleadorAleatorio = aleatorio(1, 3);
+  let peleadorAleatorio = aleatorio(0, combatientesZ.length - 1);
 
-  if (peleadorAleatorio === 1) {
-    //Coku
-    spanPeleadorEnemigo.innerHTML = "Goku";
-  } else if (peleadorAleatorio === 2) {
-    //Vegeto
-    spanPeleadorEnemigo.innerHTML = "Vegeta";
-  } else if (peleadorAleatorio === 3) {
-    //Mario Buu
-    spanPeleadorEnemigo.innerHTML = "Majin Buu";
-  }
+  spanPeleadorEnemigo.innerHTML = combatientesZ[peleadorAleatorio].nombre;
 }
 
 function ataqueBankoku() {
@@ -266,7 +257,7 @@ function reiniciarJuego() {
 }
 
 function aleatorio(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + 1);
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 window.addEventListener("load", iniciarJuego);
