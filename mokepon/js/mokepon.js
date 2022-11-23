@@ -148,11 +148,11 @@ function seleccionarPeleadorJugador() {
   sectionSeleccionarAtaque.style.display = "flex";
 
   if (inputCoku.checked) {
-    spanJugadorParticipante.innerHTML = "Goku";
+    spanJugadorParticipante.innerHTML = inputCoku.id;
   } else if (inputVegeto.checked) {
-    spanJugadorParticipante.innerHTML = "Vegeta";
+    spanJugadorParticipante.innerHTML = inputVegeto.id;
   } else if (inputMarioBuu.checked) {
-    spanJugadorParticipante.innerHTML = "Buu";
+    spanJugadorParticipante.innerHTML = inputMarioBuu.id;
   } else {
     alert("Selecciona una Opción");
     jugar = 0;
