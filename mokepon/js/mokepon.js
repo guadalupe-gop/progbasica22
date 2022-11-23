@@ -9,9 +9,6 @@ const botonReiniciar = document.getElementById("boton-reiniciar");
 const sectionSeleccionarPeleador = document.getElementById(
   "seleccionar-jugador"
 );
-const inputCoku = document.getElementById("goku");
-const inputVegeto = document.getElementById("vegeta");
-const inputMarioBuu = document.getElementById("majinbu");
 const spanJugadorParticipante = document.getElementById("participante-judagor");
 const spanPeleadorEnemigo = document.getElementById("participante-enemigo");
 
@@ -21,10 +18,15 @@ const spanVidasEnemigo = document.getElementById("vidas-enemigo");
 const sectionMensajes = document.getElementById("resultado");
 const ataqueDelJugador = document.getElementById("ataque-del-jugador");
 const ataqueDelEnemigo = document.getElementById("ataque-del-enemigo");
+const contenedorTarjetas = document.getElementById("contenedorTarjetas");
 
+let inputCoku;
+let inputVegeto;
+let inputMarioBuu;
 let combatientesZ = [];
 let ataqueJugador;
 let ataqueEnemigo;
+let opcionDeCombatiente;
 let vidasJugador = 3;
 let vidasEnemigo = 3;
 
@@ -39,7 +41,7 @@ class Combatiente {
 
 let goku = new Combatiente("Goku", "./images/Son_Goku.webp", 5);
 let vegeta = new Combatiente("Vegeta", "./images/Vegeta.webp", 5);
-let majinbu = new Combatiente("MajinBuu", "./images/majin buu.webp", 5);
+let majinbu = new Combatiente("Buu", "./images/majin buu.webp", 5);
 
 goku.ataques.push(
   {
@@ -110,8 +112,27 @@ majinbu.ataques.push(
   }
 );
 
+combatientesZ.push(goku, vegeta, majinbu);
+
 function iniciarJuego() {
   sectionSeleccionarAtaque.style.display = "none";
+
+  combatientesZ.forEach((combatiente) => {
+    opcionDeCombatiente = `
+    <input type="radio" name="dragon" id="${combatiente.nombre}" />
+        <label class="tarjeta-dragon-ball" for=${combatiente.nombre}>
+          <p>${combatiente.nombre}</p>
+          <img src="${combatiente.foto}" alt="${combatiente.nombre}" width="70" />
+        </label>
+    `;
+
+    contenedorTarjetas.innerHTML += opcionDeCombatiente;
+
+    inputCoku = document.getElementById("Goku");
+    inputVegeto = document.getElementById("Vegeta");
+    inputMarioBuu = document.getElementById("Buu");
+  });
+
   botonPeleadorJugador.addEventListener("click", seleccionarPeleadorJugador);
   sectionReiniciar.style.display = "none";
 
@@ -131,7 +152,7 @@ function seleccionarPeleadorJugador() {
   } else if (inputVegeto.checked) {
     spanJugadorParticipante.innerHTML = "Vegeta";
   } else if (inputMarioBuu.checked) {
-    spanJugadorParticipante.innerHTML = "Majin Buu";
+    spanJugadorParticipante.innerHTML = "Buu";
   } else {
     alert("Selecciona una Opción");
     jugar = 0;
