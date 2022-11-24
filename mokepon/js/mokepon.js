@@ -25,11 +25,12 @@ let botonBankoku;
 let botonBigBang;
 let botonZetsumetsu;
 let combatientesZ = [];
-let ataqueJugador;
+let ataqueJugador = [];
 let ataqueEnemigo;
 let opcionDeCombatiente;
 let opcionDeAtaquesCombatiente;
 let peleadorSeleccionado;
+let botones = [];
 let vidasJugador = 3;
 let vidasEnemigo = 3;
 
@@ -181,36 +182,41 @@ function extraerAtaques(peleadorSeleccionado) {
 function mostrarAtaques(ataques) {
   ataques.forEach((ataque) => {
     opcionDeAtaquesCombatiente = `
-    <button id=${ataque.id} class="boton-de-ataque">${ataque.nombre}</button>`;
+    <button id=${ataque.id} class="boton-de-ataque BAtaque">${ataque.nombre}</button>`;
     contenedorAtaques.innerHTML += opcionDeAtaquesCombatiente;
   });
 
   botonBankoku = document.getElementById("boton-bankoku");
   botonBigBang = document.getElementById("boton-bigbang");
   botonZetsumetsu = document.getElementById("boton-zetsumetsu");
+  botones = document.querySelectorAll(".BAtaque");
+}
 
-  botonBankoku.addEventListener("click", ataqueBankoku);
-  botonBigBang.addEventListener("click", ataqueBigBang);
-  botonZetsumetsu.addEventListener("click", ataqueZetsumetsu);
+function secuenciaAtaque() {
+  botones.forEach((boton) => {
+    boton.addEventListener("click", (e) => {
+      if (e.target.textContent === "🔥") {
+        ataqueJugador.push("FUEGO");
+        console.log(ataqueJugador);
+        boton.style.background = "#112f58";
+      } else if (e.target.textContent === "💧") {
+        ataqueJugador.push("AGUA");
+        console.log(ataqueJugador);
+        boton.style.background = "#112f58";
+      } else {
+        ataqueJugador.push("TIERRA");
+        console.log(ataqueJugador);
+        boton.style.background = "#112f58";
+      }
+    });
+  });
 }
 
 function seleccionarPeleadorEnemigo() {
   let peleadorAleatorio = aleatorio(0, combatientesZ.length - 1);
 
   spanPeleadorEnemigo.innerHTML = combatientesZ[peleadorAleatorio].nombre;
-}
-
-function ataqueBankoku() {
-  ataqueJugador = "Bankoku";
-  ataqueAleatorioEnemigo();
-}
-function ataqueBigBang() {
-  ataqueJugador = "BigBang";
-  ataqueAleatorioEnemigo();
-}
-function ataqueZetsumetsu() {
-  ataqueJugador = "Zetsumetsu";
-  ataqueAleatorioEnemigo();
+  secuenciaAtaque();
 }
 
 function ataqueAleatorioEnemigo() {
