@@ -26,10 +26,11 @@ let botonBigBang;
 let botonZetsumetsu;
 let combatientesZ = [];
 let ataqueJugador = [];
-let ataqueEnemigo;
+let ataqueEnemigo = [];
 let opcionDeCombatiente;
 let opcionDeAtaquesCombatiente;
 let peleadorSeleccionado;
+let ataquesPeleadorEnemigo;
 let botones = [];
 let vidasJugador = 3;
 let vidasEnemigo = 3;
@@ -196,18 +197,19 @@ function secuenciaAtaque() {
   botones.forEach((boton) => {
     boton.addEventListener("click", (e) => {
       if (e.target.textContent === "🔥") {
-        ataqueJugador.push("FUEGO");
+        ataqueJugador.push("Bankoku");
         console.log(ataqueJugador);
         boton.style.background = "#112f58";
       } else if (e.target.textContent === "💧") {
-        ataqueJugador.push("AGUA");
+        ataqueJugador.push("BigBang");
         console.log(ataqueJugador);
         boton.style.background = "#112f58";
       } else {
-        ataqueJugador.push("TIERRA");
+        ataqueJugador.push("Zetsumetsu");
         console.log(ataqueJugador);
         boton.style.background = "#112f58";
       }
+      ataqueAleatorioEnemigo();
     });
   });
 }
@@ -216,19 +218,21 @@ function seleccionarPeleadorEnemigo() {
   let peleadorAleatorio = aleatorio(0, combatientesZ.length - 1);
 
   spanPeleadorEnemigo.innerHTML = combatientesZ[peleadorAleatorio].nombre;
+  ataquesPeleadorEnemigo = combatientesZ[peleadorAleatorio].ataques;
   secuenciaAtaque();
 }
 
 function ataqueAleatorioEnemigo() {
-  let ataqueAleatorio = aleatorio(1, 3);
+  let ataqueAleatorio = aleatorio(0, ataquesPeleadorEnemigo.length - 1);
 
-  if (ataqueAleatorio === 1) {
-    ataqueEnemigo = "Bankoku";
-  } else if (ataqueAleatorio === 2) {
-    ataqueEnemigo = "BigBang";
+  if (ataqueAleatorio === 0 || ataqueAleatorio === 1) {
+    ataqueEnemigo.push("Bankoku");
+  } else if (ataqueAleatorio === 4 || ataqueAleatorio === 5) {
+    ataqueEnemigo.push("BigBang");
   } else {
-    ataqueEnemigo = "Zetsumetsu";
+    ataqueEnemigo.push("Zetsumetsu");
   }
+  console.log(ataqueEnemigo);
   combate();
 }
 
