@@ -32,6 +32,8 @@ let opcionDeAtaquesCombatiente;
 let peleadorSeleccionado;
 let ataquesPeleadorEnemigo;
 let botones = [];
+let indexAtaqueJugador;
+let indexAtaqueEnemigo;
 let vidasJugador = 3;
 let vidasEnemigo = 3;
 
@@ -233,7 +235,18 @@ function ataqueAleatorioEnemigo() {
     ataqueEnemigo.push("Zetsumetsu");
   }
   console.log(ataqueEnemigo);
-  combate();
+  iniciarPelea();
+}
+
+function iniciarPelea() {
+  if (ataqueJugador.length === 5) {
+    combate();
+  }
+}
+
+function indexAmbosOponentes(jugador, enemigo) {
+  indexAtaqueJugador = ataqueJugador[jugador];
+  indexAtaqueEnemigo = ataqueEnemigo[enemigo];
 }
 
 function combate() {
@@ -242,24 +255,40 @@ function combate() {
   // 2-BigBang
   // 3-Zetusmetsu
 
-  if (ataqueJugador === ataqueEnemigo) {
-    crearMensaje("EMPATE");
-  } else if (ataqueJugador === "Bankoku" && ataqueEnemigo === "Zetsumetsu") {
-    crearMensaje("GANASTE");
-    vidasEnemigo--;
-    spanVidasEnemigo.innerHTML = vidasEnemigo;
-  } else if (ataqueJugador === "BigBang" && ataqueEnemigo === "Bankoku") {
-    crearMensaje("GANASTE");
-    vidasEnemigo--;
-    spanVidasEnemigo.innerHTML = vidasEnemigo;
-  } else if (ataqueJugador === "Zetsumetsu" && ataqueEnemigo === "BigBang") {
-    crearMensaje("GANASTE");
-    vidasEnemigo--;
-    spanVidasEnemigo.innerHTML = vidasEnemigo;
-  } else {
-    crearMensaje("PERDISTE");
-    vidasJugador--;
-    spanVidasJugador.innerHTML = vidasJugador;
+  for (let i = 0; i < ataqueJugador.length; i++) {
+    if (ataqueJugador[i] === ataqueEnemigo[i]) {
+      indexAmbosOponentes(i, i);
+      crearMensaje("EMPATE");
+    } else if (
+      ataqueJugador[i] === "Bankoku" &&
+      ataqueEnemigo[i] === "Zetsumetsu"
+    ) {
+      indexAmbosOponentes(i, i);
+      crearMensaje("GANASTE");
+      vidasEnemigo--;
+      spanVidasEnemigo.innerHTML = vidasEnemigo;
+    } else if (
+      ataqueJugador[i] === "BigBang" &&
+      ataqueEnemigo[i] === "Bankoku"
+    ) {
+      indexAmbosOponentes(i, i);
+      crearMensaje("GANASTE");
+      vidasEnemigo--;
+      spanVidasEnemigo.innerHTML = vidasEnemigo;
+    } else if (
+      ataqueJugador[i] === "Zetsumetsu" &&
+      ataqueEnemigo === "BigBang"
+    ) {
+      indexAmbosOponentes(i, i);
+      crearMensaje("GANASTE");
+      vidasEnemigo--;
+      spanVidasEnemigo.innerHTML = vidasEnemigo;
+    } else {
+      indexAmbosOponentes(i, i);
+      crearMensaje("PERDISTE");
+      vidasJugador--;
+      spanVidasJugador.innerHTML = vidasJugador;
+    }
   }
 
   revisarVidas();
@@ -278,8 +307,8 @@ function crearMensaje(resultado) {
   let nuevoAtaqueDelEnemigo = document.createElement("p");
 
   sectionMensajes.innerHTML = resultado;
-  nuevoAtaqueDelJugador.innerHTML = ataqueJugador;
-  nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo;
+  nuevoAtaqueDelJugador.innerHTML = indexAtaqueJugador;
+  nuevoAtaqueDelEnemigo.innerHTML = indexAtaqueEnemigo;
 
   ataqueDelJugador.appendChild(nuevoAtaqueDelJugador);
   ataqueDelEnemigo.appendChild(nuevoAtaqueDelEnemigo);
