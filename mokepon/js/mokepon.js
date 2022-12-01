@@ -9,8 +9,8 @@ const sectionSeleccionarPeleador = document.getElementById(
 const spanJugadorParticipante = document.getElementById("participante-judagor");
 const spanPeleadorEnemigo = document.getElementById("participante-enemigo");
 
-const spanVidasJugador = document.getElementById("vidas-jugador");
-const spanVidasEnemigo = document.getElementById("vidas-enemigo");
+const spanVictoriasJugador = document.getElementById("vidas-jugador");
+const spanVictoriasEnemigo = document.getElementById("vidas-enemigo");
 
 const sectionMensajes = document.getElementById("resultado");
 const ataqueDelJugador = document.getElementById("ataque-del-jugador");
@@ -34,21 +34,28 @@ let ataquesPeleadorEnemigo;
 let botones = [];
 let indexAtaqueJugador;
 let indexAtaqueEnemigo;
-let vidasJugador = 3;
-let vidasEnemigo = 3;
+let victoriasJugador = 0;
+let victoriasEnemigo = 0;
 
 class Combatiente {
-  constructor(nombre, foto, vida) {
+  constructor(nombre, foto, vida, tipo) {
     (this.nombre = nombre),
       (this.foto = foto),
       (this.vida = vida),
+      (this.tipo = tipo),
       (this.ataques = []);
   }
 }
 
-let goku = new Combatiente("Goku", "./images/Son_Goku.webp", 5);
-let vegeta = new Combatiente("Vegeta", "./images/Vegeta.webp", 5);
-let majinbu = new Combatiente("Buu", "./images/majin buu.webp", 5);
+let goku = new Combatiente("Goku", "./images/Son_Goku.webp", 5, "Bankoku");
+let vegeta = new Combatiente("Vegeta", "./images/Vegeta.webp", 5, "BigBang");
+let majinbu = new Combatiente(
+  "Buu",
+  "./images/majin buu.webp",
+  5,
+  "Zetsumetsu"
+);
+// let cell = new Combatiente("Cell", "./images/cell-perfecto.webp", 5, "Bankoku");
 
 goku.ataques.push(
   {
@@ -202,14 +209,18 @@ function secuenciaAtaque() {
         ataqueJugador.push("Bankoku");
         console.log(ataqueJugador);
         boton.style.background = "#112f58";
+        // Desactiva botones ataque
+        boton.disabled = true;
       } else if (e.target.textContent === "💧") {
         ataqueJugador.push("BigBang");
         console.log(ataqueJugador);
         boton.style.background = "#112f58";
+        boton.disabled = true;
       } else {
         ataqueJugador.push("Zetsumetsu");
         console.log(ataqueJugador);
         boton.style.background = "#112f58";
+        boton.disabled = true;
       }
       ataqueAleatorioEnemigo();
     });
@@ -227,14 +238,27 @@ function seleccionarPeleadorEnemigo() {
 function ataqueAleatorioEnemigo() {
   let ataqueAleatorio = aleatorio(0, ataquesPeleadorEnemigo.length - 1);
 
-  if (ataqueAleatorio === 0 || ataqueAleatorio === 1) {
+  let ataque = ataquesPeleadorEnemigo[ataqueAleatorio].nombre;
+  // ataqueEnemigo.push(ataquesPeleadorEnemigo[ataqueAleatorio].nombre);
+
+  ataquesPeleadorEnemigo.splice(ataqueAleatorio, 1);
+
+  if (ataque === "🔥") {
     ataqueEnemigo.push("Bankoku");
-  } else if (ataqueAleatorio === 4 || ataqueAleatorio === 5) {
+  } else if (ataque === "💧") {
     ataqueEnemigo.push("BigBang");
   } else {
     ataqueEnemigo.push("Zetsumetsu");
   }
+  // if (ataqueAleatorio === 0 || ataqueAleatorio === 1) {
+  //   ataqueEnemigo.push("Bankoku");
+  // } else if (ataqueAleatorio === 4 || ataqueAleatorio === 5) {
+  //   ataqueEnemigo.push("BigBang");
+  // } else {
+  //   ataqueEnemigo.push("Zetsumetsu");
+  // }
   console.log(ataqueEnemigo);
+  // console.log(ataquesPeleadorEnemigo);
   iniciarPelea();
 }
 
@@ -265,40 +289,42 @@ function combate() {
     ) {
       indexAmbosOponentes(i, i);
       crearMensaje("GANASTE");
-      vidasEnemigo--;
-      spanVidasEnemigo.innerHTML = vidasEnemigo;
+      victoriasJugador++;
+      spanVictoriasJugador.innerHTML = victoriasJugador;
     } else if (
       ataqueJugador[i] === "BigBang" &&
       ataqueEnemigo[i] === "Bankoku"
     ) {
       indexAmbosOponentes(i, i);
       crearMensaje("GANASTE");
-      vidasEnemigo--;
-      spanVidasEnemigo.innerHTML = vidasEnemigo;
+      victoriasJugador++;
+      spanVictoriasJugador.innerHTML = victoriasJugador;
     } else if (
       ataqueJugador[i] === "Zetsumetsu" &&
       ataqueEnemigo === "BigBang"
     ) {
       indexAmbosOponentes(i, i);
       crearMensaje("GANASTE");
-      vidasEnemigo--;
-      spanVidasEnemigo.innerHTML = vidasEnemigo;
+      victoriasJugador++;
+      spanVictoriasJugador.innerHTML = victoriasJugador;
     } else {
       indexAmbosOponentes(i, i);
       crearMensaje("PERDISTE");
-      vidasJugador--;
-      spanVidasJugador.innerHTML = vidasJugador;
+      victoriasEnemigo++;
+      spanVictoriasEnemigo.innerHTML = victoriasEnemigo;
     }
   }
 
-  revisarVidas();
+  revisarVictorias();
 }
 
-function revisarVidas() {
-  if (vidasEnemigo === 0) {
-    crearMensajeFinal("🎉 GANASTE 🎉");
-  } else if (vidasJugador === 0) {
-    crearMensajeFinal("Lo siento, Perdiste 🎭");
+function revisarVictorias() {
+  if (victoriasJugador === victoriasEnemigo) {
+    crearMensajeFinal("Fue un empate");
+  } else if (victoriasJugador > victoriasEnemigo) {
+    crearMensajeFinal("FELICITACIONES! Ganaste👏");
+  } else {
+    crearMensajeFinal("Lo siento, Perdiste");
   }
 }
 
@@ -316,10 +342,6 @@ function crearMensaje(resultado) {
 
 function crearMensajeFinal(resultadoFinal) {
   sectionMensajes.innerHTML = resultadoFinal;
-  // Desactiva botones ataque
-  botonBankoku.disabled = true;
-  botonBigBang.disabled = true;
-  botonZetsumetsu.disabled = true;
   sectionReiniciar.style.display = "block";
 }
 

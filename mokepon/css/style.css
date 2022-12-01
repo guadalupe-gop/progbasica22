@@ -72,7 +72,7 @@ input:checked + label{
     margin-bottom: 20px;
 }
 .boton-de-ataque { 
-    width: 140px;
+    width: 80px;
     height: 40px;
     background: rgb(228, 130, 17);
     border: none;
