@@ -13,18 +13,22 @@
       <h2 class="subtitulo">Elige tu peleador:</h2>
 
       <div id="contenedorTarjetas" class="tarjetas"></div>
-      <!-- <label for="ceil">
-        <img src="./images/cell-perfecto.webp" width="80" alt="ceil" />
-        ceil
-      </label>
-      <input type="radio" name="dragon" id="ceil" /> -->
-
       <!-- Coku -> Bankoku Vegeto -> Big Bang Mario BUU ->Jinrui Zetsumetsu Ceil ->Ki
       no Tsurugi Freezer -> Death Ball -->
       <button class="boton-seleccionar" id="seleccionar-peleador">
         Seleccionar
       </button>
     </section>
+
+    <section id="ver-mapa">
+      <h1 class="titulo">Recorre el mapa con tu Peleador</h1>
+      <canvas id="mapa"> </canvas>
+      <button onmouseup="stopMove()" onmousedown="moveRight()">➡</button>
+      <button onmouseup="stopMove()" onmousedown="moveLeft()">⬅</button>
+      <button onmouseup="stopMove()" onmousedown="moveUp()">⬆</button>
+      <button onmouseup="stopMove()" onmousedown="moveDown()">⬇</button>
+    </section>
+
     <section id="seleccionar-ataque">
       <img src="./images/dragonballZ.png" alt="dragon ball Z" width="200" />
       <h2>Elige tu ataque:</h2>

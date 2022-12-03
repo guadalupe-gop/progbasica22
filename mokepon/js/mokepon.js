@@ -18,6 +18,9 @@ const ataqueDelEnemigo = document.getElementById("ataque-del-enemigo");
 const contenedorTarjetas = document.getElementById("contenedorTarjetas");
 const contenedorAtaques = document.getElementById("contenedorAtaques");
 
+const sectionVerMapa = document.getElementById("ver-mapa");
+const mapa = document.getElementById("mapa");
+
 let inputCoku;
 let inputVegeto;
 let inputMarioBuu;
@@ -36,6 +39,8 @@ let indexAtaqueJugador;
 let indexAtaqueEnemigo;
 let victoriasJugador = 0;
 let victoriasEnemigo = 0;
+let lienzo = mapa.getContext("2d");
+let intervalo;
 
 class Combatiente {
   constructor(nombre, foto, vida, tipo) {
@@ -44,6 +49,14 @@ class Combatiente {
       (this.vida = vida),
       (this.tipo = tipo),
       (this.ataques = []);
+    this.x = 20;
+    this.y = 30;
+    this.ancho = 40;
+    this.alto = 80;
+    this.mapaFoto = new Image();
+    this.mapaFoto.src = foto;
+    this.velocidadX = 0;
+    this.velocidadY = 0;
   }
 }
 
@@ -130,6 +143,7 @@ combatientesZ.push(goku, vegeta, majinbu);
 
 function iniciarJuego() {
   sectionSeleccionarAtaque.style.display = "none";
+  sectionVerMapa.style.display = "none";
 
   combatientesZ.forEach((combatiente) => {
     opcionDeCombatiente = `
@@ -156,7 +170,9 @@ function iniciarJuego() {
 function seleccionarPeleadorJugador() {
   let jugar = 1;
   sectionSeleccionarPeleador.style.display = "none";
-  sectionSeleccionarAtaque.style.display = "flex";
+  // sectionSeleccionarAtaque.style.display = "flex";
+  sectionVerMapa.style.display = "flex";
+  intervalo = setInterval(pintarPersonaje, 50);
 
   if (inputCoku.checked) {
     spanJugadorParticipante.innerHTML = inputCoku.id;
@@ -353,4 +369,31 @@ function aleatorio(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function pintarPersonaje() {
+  goku.x = goku.x + goku.velocidadX;
+  goku.y = goku.y + goku.velocidadY;
+  lienzo.clearRect(0, 0, mapa.width, mapa.height);
+  lienzo.drawImage(goku.mapaFoto, goku.x, goku.y, goku.ancho, goku.alto);
+}
+
+function moveRight() {
+  goku.velocidadX = 5;
+}
+
+function moveLeft() {
+  goku.velocidadX = -5;
+}
+
+function moveUp() {
+  goku.velocidadY = -5;
+}
+
+function moveDown() {
+  goku.velocidadY = 5;
+}
+
+function stopMove() {
+  goku.velocidadX = 0;
+  goku.velocidadY = 0;
+}
 window.addEventListener("load", iniciarJuego);
