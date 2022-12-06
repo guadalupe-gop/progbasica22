@@ -33,6 +33,7 @@ let ataqueEnemigo = [];
 let opcionDeCombatiente;
 let opcionDeAtaquesCombatiente;
 let peleadorSeleccionado;
+let peleadorSeleccionadoObjt;
 let ataquesPeleadorEnemigo;
 let botones = [];
 let indexAtaqueJugador;
@@ -41,6 +42,8 @@ let victoriasJugador = 0;
 let victoriasEnemigo = 0;
 let lienzo = mapa.getContext("2d");
 let intervalo;
+let mapaBackground = new Image();
+mapaBackground.src = "./images/dragonBallMap.jpg";
 
 class Combatiente {
   constructor(nombre, foto, vida, tipo) {
@@ -171,8 +174,6 @@ function seleccionarPeleadorJugador() {
   let jugar = 1;
   sectionSeleccionarPeleador.style.display = "none";
   // sectionSeleccionarAtaque.style.display = "flex";
-  sectionVerMapa.style.display = "flex";
-  intervalo = setInterval(pintarPersonaje, 50);
 
   if (inputCoku.checked) {
     spanJugadorParticipante.innerHTML = inputCoku.id;
@@ -189,6 +190,8 @@ function seleccionarPeleadorJugador() {
   }
   if (jugar == 1) {
     extraerAtaques(peleadorSeleccionado);
+    sectionVerMapa.style.display = "flex";
+    iniciarMapa();
     seleccionarPeleadorEnemigo();
   }
 }
@@ -369,31 +372,79 @@ function aleatorio(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function pintarPersonaje() {
-  goku.x = goku.x + goku.velocidadX;
-  goku.y = goku.y + goku.velocidadY;
+function pintarCanvas() {
+  peleadorSeleccionadoObjt.x =
+    peleadorSeleccionadoObjt.x + peleadorSeleccionadoObjt.velocidadX;
+  peleadorSeleccionadoObjt.y =
+    peleadorSeleccionadoObjt.y + peleadorSeleccionadoObjt.velocidadY;
   lienzo.clearRect(0, 0, mapa.width, mapa.height);
-  lienzo.drawImage(goku.mapaFoto, goku.x, goku.y, goku.ancho, goku.alto);
+  lienzo.drawImage(mapaBackground, 0, 0, mapa.width, mapa.height);
+  lienzo.drawImage(
+    peleadorSeleccionadoObjt.mapaFoto,
+    peleadorSeleccionadoObjt.x,
+    peleadorSeleccionadoObjt.y,
+    peleadorSeleccionadoObjt.ancho,
+    peleadorSeleccionadoObjt.alto
+  );
 }
 
 function moveRight() {
-  goku.velocidadX = 5;
+  peleadorSeleccionadoObjt.velocidadX = 5;
 }
 
 function moveLeft() {
-  goku.velocidadX = -5;
+  peleadorSeleccionadoObjt.velocidadX = -5;
 }
 
 function moveUp() {
-  goku.velocidadY = -5;
+  peleadorSeleccionadoObjt.velocidadY = -5;
 }
 
 function moveDown() {
-  goku.velocidadY = 5;
+  peleadorSeleccionadoObjt.velocidadY = 5;
 }
 
 function stopMove() {
-  goku.velocidadX = 0;
-  goku.velocidadY = 0;
+  peleadorSeleccionadoObjt.velocidadX = 0;
+  peleadorSeleccionadoObjt.velocidadY = 0;
+}
+
+function sePresionaUnaTecla(e) {
+  switch (e.key) {
+    case "ArrowUp":
+      moveUp();
+      break;
+    case "ArrowDown":
+      moveDown();
+      break;
+    case "ArrowRight":
+      moveRight();
+      break;
+    case "ArrowLeft":
+      moveLeft();
+      break;
+    default:
+      console.log("Not move");
+      break;
+  }
+}
+
+function iniciarMapa() {
+  mapa.width = 536;
+  mapa.height = 286;
+  peleadorSeleccionadoObjt = obtenerObjetoPeleador(peleadorSeleccionado);
+  intervalo = setInterval(pintarCanvas, 50);
+
+  window.addEventListener("keydown", sePresionaUnaTecla);
+
+  window.addEventListener("keyup", stopMove);
+}
+
+function obtenerObjetoPeleador() {
+  for (let i = 0; i < combatientesZ.length; i++) {
+    if (peleadorSeleccionado === combatientesZ[i].nombre) {
+      return combatientesZ[i];
+    }
+  }
 }
 window.addEventListener("load", iniciarJuego);
