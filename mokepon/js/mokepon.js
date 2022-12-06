@@ -46,30 +46,77 @@ let mapaBackground = new Image();
 mapaBackground.src = "./images/dragonBallMap.jpg";
 
 class Combatiente {
-  constructor(nombre, foto, vida, tipo) {
+  constructor(nombre, foto, vida, tipo, fotoMapa, x = 10, y = 10) {
     (this.nombre = nombre),
       (this.foto = foto),
       (this.vida = vida),
       (this.tipo = tipo),
       (this.ataques = []);
-    this.x = 20;
-    this.y = 30;
+    this.x = x;
+    this.y = y;
     this.ancho = 40;
     this.alto = 80;
     this.mapaFoto = new Image();
-    this.mapaFoto.src = foto;
+    this.mapaFoto.src = fotoMapa;
     this.velocidadX = 0;
     this.velocidadY = 0;
   }
+
+  pintarPeleadores() {
+    lienzo.drawImage(this.mapaFoto, this.x, this.y, this.ancho, this.alto);
+  }
 }
 
-let goku = new Combatiente("Goku", "./images/Son_Goku.webp", 5, "Bankoku");
-let vegeta = new Combatiente("Vegeta", "./images/Vegeta.webp", 5, "BigBang");
+let goku = new Combatiente(
+  "Goku",
+  "./images/Son_Goku.webp",
+  5,
+  "Bankoku",
+  "./images/Son_Goku.webp"
+);
+let vegeta = new Combatiente(
+  "Vegeta",
+  "./images/Vegeta.webp",
+  5,
+  "BigBang",
+  "./images/Vegeta.webp"
+);
 let majinbu = new Combatiente(
   "Buu",
   "./images/majin buu.webp",
   5,
-  "Zetsumetsu"
+  "Zetsumetsu",
+  "./images/majin buu.webp"
+);
+
+// Enemigos
+
+let gokuEnemigo = new Combatiente(
+  "Goku",
+  "./images/Son_Goku.webp",
+  5,
+  "Bankoku",
+  "./images/Son_Goku.webp",
+  80,
+  120
+);
+let vegetaEnemigo = new Combatiente(
+  "Vegeta",
+  "./images/Vegeta.webp",
+  5,
+  "BigBang",
+  "./images/Vegeta.webp",
+  150,
+  95
+);
+let majinbuEnemigo = new Combatiente(
+  "Buu",
+  "./images/majin buu.webp",
+  5,
+  "Zetsumetsu",
+  "./images/majin buu.webp",
+  200,
+  190
 );
 // let cell = new Combatiente("Cell", "./images/cell-perfecto.webp", 5, "Bankoku");
 
@@ -379,13 +426,10 @@ function pintarCanvas() {
     peleadorSeleccionadoObjt.y + peleadorSeleccionadoObjt.velocidadY;
   lienzo.clearRect(0, 0, mapa.width, mapa.height);
   lienzo.drawImage(mapaBackground, 0, 0, mapa.width, mapa.height);
-  lienzo.drawImage(
-    peleadorSeleccionadoObjt.mapaFoto,
-    peleadorSeleccionadoObjt.x,
-    peleadorSeleccionadoObjt.y,
-    peleadorSeleccionadoObjt.ancho,
-    peleadorSeleccionadoObjt.alto
-  );
+  peleadorSeleccionadoObjt.pintarPeleadores();
+  gokuEnemigo.pintarPeleadores();
+  vegetaEnemigo.pintarPeleadores();
+  majinbuEnemigo.pintarPeleadores();
 }
 
 function moveRight() {
