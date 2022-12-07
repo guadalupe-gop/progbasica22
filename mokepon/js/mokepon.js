@@ -97,8 +97,8 @@ let gokuEnemigo = new Combatiente(
   5,
   "Bankoku",
   "./images/Son_Goku.webp",
-  80,
-  120
+  50,
+  180
 );
 let vegetaEnemigo = new Combatiente(
   "Vegeta",
@@ -106,7 +106,7 @@ let vegetaEnemigo = new Combatiente(
   5,
   "BigBang",
   "./images/Vegeta.webp",
-  150,
+  350,
   95
 );
 let majinbuEnemigo = new Combatiente(
@@ -115,7 +115,7 @@ let majinbuEnemigo = new Combatiente(
   5,
   "Zetsumetsu",
   "./images/majin buu.webp",
-  200,
+  490,
   190
 );
 // let cell = new Combatiente("Cell", "./images/cell-perfecto.webp", 5, "Bankoku");
@@ -220,7 +220,6 @@ function iniciarJuego() {
 function seleccionarPeleadorJugador() {
   let jugar = 1;
   sectionSeleccionarPeleador.style.display = "none";
-  // sectionSeleccionarAtaque.style.display = "flex";
 
   if (inputCoku.checked) {
     spanJugadorParticipante.innerHTML = inputCoku.id;
@@ -430,6 +429,15 @@ function pintarCanvas() {
   gokuEnemigo.pintarPeleadores();
   vegetaEnemigo.pintarPeleadores();
   majinbuEnemigo.pintarPeleadores();
+
+  if (
+    peleadorSeleccionadoObjt.velocidadX != 0 ||
+    peleadorSeleccionadoObjt.velocidadY != 0
+  ) {
+    revisarColision(gokuEnemigo);
+    revisarColision(vegetaEnemigo);
+    revisarColision(majinbuEnemigo);
+  }
 }
 
 function moveRight() {
@@ -490,5 +498,31 @@ function obtenerObjetoPeleador() {
       return combatientesZ[i];
     }
   }
+}
+
+function revisarColision(enemigo) {
+  const arribaEnemigo = enemigo.y;
+  const abajoEnemigo = enemigo.y + enemigo.alto;
+  const derechaEnemigo = enemigo.x + enemigo.ancho;
+  const izquierdaEnemigo = enemigo.x;
+
+  const arribaPeleador = peleadorSeleccionadoObjt.y;
+  const abajoPeleador =
+    peleadorSeleccionadoObjt.y + peleadorSeleccionadoObjt.alto;
+  const derechaPeleador =
+    peleadorSeleccionadoObjt.x + peleadorSeleccionadoObjt.ancho;
+  const izquierdaPeleador = peleadorSeleccionadoObjt.x;
+  //
+  if (
+    abajoPeleador < arribaEnemigo ||
+    arribaPeleador > abajoEnemigo ||
+    derechaPeleador < izquierdaEnemigo ||
+    izquierdaPeleador > derechaEnemigo
+  ) {
+    return;
+  }
+
+  stopMove();
+  alert(`Hay una colision ${enemigo.nombre}`);
 }
 window.addEventListener("load", iniciarJuego);
