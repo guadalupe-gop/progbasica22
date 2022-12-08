@@ -143,6 +143,29 @@ goku.ataques.push(
   }
 );
 
+gokuEnemigo.ataques.push(
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  },
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  },
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  },
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  }
+);
+
 vegeta.ataques.push(
   {
     nombre: "💧",
@@ -166,7 +189,53 @@ vegeta.ataques.push(
   }
 );
 
+vegetaEnemigo.ataques.push(
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  },
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  }
+);
+
 majinbu.ataques.push(
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  },
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  },
+  {
+    nombre: "🌱",
+    id: "boton-zetsumetsu",
+  },
+  {
+    nombre: "💧",
+    id: "boton-bigbang",
+  },
+  {
+    nombre: "🔥",
+    id: "boton-bankoku",
+  }
+);
+
+majinbuEnemigo.ataques.push(
   {
     nombre: "🌱",
     id: "boton-zetsumetsu",
@@ -238,7 +307,6 @@ function seleccionarPeleadorJugador() {
     extraerAtaques(peleadorSeleccionado);
     sectionVerMapa.style.display = "flex";
     iniciarMapa();
-    seleccionarPeleadorEnemigo();
   }
 }
 
@@ -292,15 +360,16 @@ function secuenciaAtaque() {
   });
 }
 
-function seleccionarPeleadorEnemigo() {
-  let peleadorAleatorio = aleatorio(0, combatientesZ.length - 1);
+function seleccionarPeleadorEnemigo(enemigo) {
+  // let peleadorAleatorio = aleatorio(0, combatientesZ.length - 1);
 
-  spanPeleadorEnemigo.innerHTML = combatientesZ[peleadorAleatorio].nombre;
-  ataquesPeleadorEnemigo = combatientesZ[peleadorAleatorio].ataques;
+  spanPeleadorEnemigo.innerHTML = enemigo.nombre;
+  ataquesPeleadorEnemigo = enemigo.ataques;
   secuenciaAtaque();
 }
 
 function ataqueAleatorioEnemigo() {
+  console.log("ataques enemigo" + ataquesPeleadorEnemigo);
   let ataqueAleatorio = aleatorio(0, ataquesPeleadorEnemigo.length - 1);
 
   let ataque = ataquesPeleadorEnemigo[ataqueAleatorio].nombre;
@@ -523,6 +592,11 @@ function revisarColision(enemigo) {
   }
 
   stopMove();
-  alert(`Hay una colision ${enemigo.nombre}`);
+  clearInterval(intervalo);
+  // console.log("Se detectó una colision");
+  sectionSeleccionarAtaque.style.display = "flex";
+  sectionVerMapa.style.display = "none";
+  seleccionarPeleadorEnemigo(enemigo);
+  // alert(`Hay una colision ${enemigo.nombre}`);
 }
 window.addEventListener("load", iniciarJuego);
