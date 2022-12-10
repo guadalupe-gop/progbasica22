@@ -119,9 +119,6 @@ input:checked + label{
     align-items: center;
     justify-content: center;
 }
-#mapa {
-    border: 2px solid rgb(228, 130, 17) ;
-}
 
 @media (max-width: 375px){
     .tarjetas{

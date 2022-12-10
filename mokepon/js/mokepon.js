@@ -45,17 +45,30 @@ let intervalo;
 let mapaBackground = new Image();
 mapaBackground.src = "./images/dragonBallMap.jpg";
 
+let alturaQueBuscamos;
+let anchoDelMapa = window.innerWidth - 20;
+
+const anchoMaximoDelMapa = 375;
+
+if (anchoDelMapa > anchoMaximoDelMapa) {
+  anchoDelMapa = anchoMaximoDelMapa - 20;
+}
+alturaQueBuscamos = (anchoDelMapa * 600) / 800;
+
+mapa.width = anchoDelMapa;
+mapa.height = alturaQueBuscamos;
+
 class Combatiente {
-  constructor(nombre, foto, vida, tipo, fotoMapa, x = 10, y = 10) {
+  constructor(nombre, foto, vida, tipo, fotoMapa) {
     (this.nombre = nombre),
       (this.foto = foto),
       (this.vida = vida),
       (this.tipo = tipo),
       (this.ataques = []);
-    this.x = x;
-    this.y = y;
     this.ancho = 40;
     this.alto = 80;
+    this.x = aleatorio(0, mapa.width - this.ancho);
+    this.y = aleatorio(0, mapa.height - this.alto);
     this.mapaFoto = new Image();
     this.mapaFoto.src = fotoMapa;
     this.velocidadX = 0;
@@ -96,27 +109,21 @@ let gokuEnemigo = new Combatiente(
   "./images/Son_Goku.webp",
   5,
   "Bankoku",
-  "./images/Son_Goku.webp",
-  50,
-  180
+  "./images/Son_Goku.webp"
 );
 let vegetaEnemigo = new Combatiente(
   "Vegeta",
   "./images/Vegeta.webp",
   5,
   "BigBang",
-  "./images/Vegeta.webp",
-  350,
-  95
+  "./images/Vegeta.webp"
 );
 let majinbuEnemigo = new Combatiente(
   "Buu",
   "./images/majin buu.webp",
   5,
   "Zetsumetsu",
-  "./images/majin buu.webp",
-  490,
-  190
+  "./images/majin buu.webp"
 );
 // let cell = new Combatiente("Cell", "./images/cell-perfecto.webp", 5, "Bankoku");
 
@@ -551,8 +558,6 @@ function sePresionaUnaTecla(e) {
 }
 
 function iniciarMapa() {
-  mapa.width = 536;
-  mapa.height = 286;
   peleadorSeleccionadoObjt = obtenerObjetoPeleador(peleadorSeleccionado);
   intervalo = setInterval(pintarCanvas, 50);
 
