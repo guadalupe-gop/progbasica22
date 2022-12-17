@@ -291,6 +291,18 @@ function iniciarJuego() {
   sectionReiniciar.style.display = "none";
 
   botonReiniciar.addEventListener("click", reiniciarJuego);
+
+  unirseAlJuego();
+}
+
+function unirseAlJuego() {
+  fetch("http://localhost:8080/unirse").then(function (res) {
+    if (res.ok) {
+      res.text().then(function (respuesta) {
+        console.log(respuesta);
+      });
+    }
+  });
 }
 
 function seleccionarPeleadorJugador() {

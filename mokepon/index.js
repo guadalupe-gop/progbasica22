@@ -1,11 +1,25 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
 const port = 8080;
 
-app.get("/", (req, res) => {
-  res.send("Welcome, welcome nodeJS");
+app.use(cors());
+
+const jugadores = [];
+
+class Jugador {
+  constructor(id) {
+    this.id = id;
+  }
+}
+
+app.get("/unirse", (req, res) => {
+  const id = `${Math.random()}`;
+  const jugador = new Jugador(id);
+  jugadores.push(jugador);
+  res.send(id);
 });
 
 app.listen(8080, () => {
