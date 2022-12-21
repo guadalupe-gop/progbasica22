@@ -21,6 +21,7 @@ const contenedorAtaques = document.getElementById("contenedorAtaques");
 const sectionVerMapa = document.getElementById("ver-mapa");
 const mapa = document.getElementById("mapa");
 
+let jugadorId = null;
 let inputCoku;
 let inputVegeto;
 let inputMarioBuu;
@@ -300,6 +301,7 @@ function unirseAlJuego() {
     if (res.ok) {
       res.text().then(function (respuesta) {
         console.log(respuesta);
+        jugadorId = respuesta;
       });
     }
   });
@@ -323,10 +325,23 @@ function seleccionarPeleadorJugador() {
     jugar = 0;
   }
   if (jugar == 1) {
+    seleccionarPeleador(peleadorSeleccionado);
     extraerAtaques(peleadorSeleccionado);
     sectionVerMapa.style.display = "flex";
     iniciarMapa();
   }
+}
+
+function seleccionarPeleador(peleadorSeleccionado) {
+  fetch(`http://localhost:8080/peleador/${jugadorId}`, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      peleador: peleadorSeleccionado,
+    }),
+  });
 }
 
 function extraerAtaques(peleadorSeleccionado) {
