@@ -60,12 +60,13 @@ mapa.width = anchoDelMapa;
 mapa.height = alturaQueBuscamos;
 
 class Combatiente {
-  constructor(nombre, foto, vida, tipo, fotoMapa) {
-    (this.nombre = nombre),
-      (this.foto = foto),
-      (this.vida = vida),
-      (this.tipo = tipo),
-      (this.ataques = []);
+  constructor(nombre, foto, vida, tipo, fotoMapa, id = null) {
+    this.id = id;
+    this.nombre = nombre;
+    this.foto = foto;
+    this.vida = vida;
+    this.tipo = tipo;
+    this.ataques = [];
     this.ancho = 40;
     this.alto = 80;
     this.x = aleatorio(0, mapa.width - this.ancho);
@@ -105,30 +106,9 @@ let majinbu = new Combatiente(
 
 // Enemigos
 
-let gokuEnemigo = new Combatiente(
-  "Goku",
-  "./images/Son_Goku.webp",
-  5,
-  "Bankoku",
-  "./images/Son_Goku.webp"
-);
-let vegetaEnemigo = new Combatiente(
-  "Vegeta",
-  "./images/Vegeta.webp",
-  5,
-  "BigBang",
-  "./images/Vegeta.webp"
-);
-let majinbuEnemigo = new Combatiente(
-  "Buu",
-  "./images/majin buu.webp",
-  5,
-  "Zetsumetsu",
-  "./images/majin buu.webp"
-);
 // let cell = new Combatiente("Cell", "./images/cell-perfecto.webp", 5, "Bankoku");
 
-goku.ataques.push(
+const GOKU_ATAQUES = [
   {
     nombre: "🔥",
     id: "boton-bankoku",
@@ -148,33 +128,12 @@ goku.ataques.push(
   {
     nombre: "🌱",
     id: "boton-zetsumetsu",
-  }
-);
+  },
+];
 
-gokuEnemigo.ataques.push(
-  {
-    nombre: "🔥",
-    id: "boton-bankoku",
-  },
-  {
-    nombre: "🔥",
-    id: "boton-bankoku",
-  },
-  {
-    nombre: "🔥",
-    id: "boton-bankoku",
-  },
-  {
-    nombre: "💧",
-    id: "boton-bigbang",
-  },
-  {
-    nombre: "🌱",
-    id: "boton-zetsumetsu",
-  }
-);
+goku.ataques.push(...GOKU_ATAQUES);
 
-vegeta.ataques.push(
+const VEGETA_ATAQUES = [
   {
     nombre: "💧",
     id: "boton-bigbang",
@@ -194,33 +153,12 @@ vegeta.ataques.push(
   {
     nombre: "🌱",
     id: "boton-zetsumetsu",
-  }
-);
+  },
+];
 
-vegetaEnemigo.ataques.push(
-  {
-    nombre: "💧",
-    id: "boton-bigbang",
-  },
-  {
-    nombre: "💧",
-    id: "boton-bigbang",
-  },
-  {
-    nombre: "💧",
-    id: "boton-bigbang",
-  },
-  {
-    nombre: "🔥",
-    id: "boton-bankoku",
-  },
-  {
-    nombre: "🌱",
-    id: "boton-zetsumetsu",
-  }
-);
+vegeta.ataques.push(...VEGETA_ATAQUES);
 
-majinbu.ataques.push(
+const MAJINBU_ATAQUES = [
   {
     nombre: "🌱",
     id: "boton-zetsumetsu",
@@ -240,31 +178,10 @@ majinbu.ataques.push(
   {
     nombre: "🔥",
     id: "boton-bankoku",
-  }
-);
+  },
+];
 
-majinbuEnemigo.ataques.push(
-  {
-    nombre: "🌱",
-    id: "boton-zetsumetsu",
-  },
-  {
-    nombre: "🌱",
-    id: "boton-zetsumetsu",
-  },
-  {
-    nombre: "🌱",
-    id: "boton-zetsumetsu",
-  },
-  {
-    nombre: "💧",
-    id: "boton-bigbang",
-  },
-  {
-    nombre: "🔥",
-    id: "boton-bankoku",
-  }
-);
+majinbu.ataques.push(...MAJINBU_ATAQUES);
 
 combatientesZ.push(goku, vegeta, majinbu);
 
@@ -529,9 +446,12 @@ function pintarCanvas() {
   lienzo.clearRect(0, 0, mapa.width, mapa.height);
   lienzo.drawImage(mapaBackground, 0, 0, mapa.width, mapa.height);
   peleadorSeleccionadoObjt.pintarPeleadores();
-  gokuEnemigo.pintarPeleadores();
-  vegetaEnemigo.pintarPeleadores();
-  majinbuEnemigo.pintarPeleadores();
+
+  enviarPosicion(peleadorSeleccionadoObjt.x, peleadorSeleccionadoObjt.y);
+
+  // gokuEnemigo.pintarPeleadores();
+  // vegetaEnemigo.pintarPeleadores();
+  // majinbuEnemigo.pintarPeleadores();
 
   if (
     peleadorSeleccionadoObjt.velocidadX != 0 ||
@@ -541,6 +461,60 @@ function pintarCanvas() {
     revisarColision(vegetaEnemigo);
     revisarColision(majinbuEnemigo);
   }
+}
+
+function enviarPosicion(x, y) {
+  fetch(`http://localhost:8080/peleador/${jugadorId}/posicion`, {
+    method: "post",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      x,
+      y,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      res.json().then(({ enemigos }) => {
+        console.log(enemigos);
+        enemigos.forEach((enemigo) => {
+          let peleadorEnemigo = null;
+          const peleadorNombre = enemigo.peleador.nombre || "";
+
+          if (peleadorNombre === "Goku") {
+            peleadorEnemigo = new Combatiente(
+              "Goku",
+              "./images/Son_Goku.webp",
+              5,
+              "Bankoku",
+              "./images/Son_Goku.webp"
+            );
+          } else if (peleadorNombre === "Vegeta") {
+            peleadorEnemigo = new Combatiente(
+              "Vegeta",
+              "./images/Vegeta.webp",
+              5,
+              "BigBang",
+              "./images/Vegeta.webp"
+            );
+          } else if (peleadorNombre === "Buu") {
+            peleadorEnemigo = new Combatiente(
+              "Buu",
+              "./images/majin buu.webp",
+              5,
+              "Zetsumetsu",
+              "./images/majin buu.webp"
+            );
+          }
+
+          peleadorEnemigo.x = enemigo.x;
+          peleadorEnemigo.y = enemigo.y;
+
+          peleadorEnemigo.pintarPeleadores();
+        });
+      });
+    }
+  });
 }
 
 function moveRight() {
