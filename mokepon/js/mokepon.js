@@ -22,6 +22,7 @@ const sectionVerMapa = document.getElementById("ver-mapa");
 const mapa = document.getElementById("mapa");
 
 let jugadorId = null;
+let enemigoId = null;
 let inputCoku;
 let inputVegeto;
 let inputMarioBuu;
@@ -307,8 +308,23 @@ function secuenciaAtaque() {
         boton.style.background = "#112f58";
         boton.disabled = true;
       }
-      ataqueAleatorioEnemigo();
+      // ataqueAleatorioEnemigo();
+      if (ataqueJugador.length === 5) {
+        enviarAtaques();
+      }
     });
+  });
+}
+
+function enviarAtaques() {
+  fetch(`http://localhost:8080/peleador/${jugadorId}/ataques`, {
+    method: "post",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      ataques: ataqueJugador,
+    }),
   });
 }
 
@@ -453,20 +469,9 @@ function pintarCanvas() {
   peleadoresEnemigos.forEach((peleador) => {
     if (peleador != undefined) {
       peleador.pintarPeleadores();
+      revisarColision(peleador);
     }
   });
-  // gokuEnemigo.pintarPeleadores();
-  // vegetaEnemigo.pintarPeleadores();
-  // majinbuEnemigo.pintarPeleadores();
-
-  if (
-    peleadorSeleccionadoObjt.velocidadX != 0 ||
-    peleadorSeleccionadoObjt.velocidadY != 0
-  ) {
-    revisarColision(gokuEnemigo);
-    revisarColision(vegetaEnemigo);
-    revisarColision(majinbuEnemigo);
-  }
 }
 
 function enviarPosicion(x, y) {
@@ -495,7 +500,8 @@ function enviarPosicion(x, y) {
                 "./images/Son_Goku.webp",
                 5,
                 "Bankoku",
-                "./images/Son_Goku.webp"
+                "./images/Son_Goku.webp",
+                enemigo.id
               );
             } else if (peleadorNombre === "Vegeta") {
               peleadorEnemigo = new Combatiente(
@@ -503,7 +509,8 @@ function enviarPosicion(x, y) {
                 "./images/Vegeta.webp",
                 5,
                 "BigBang",
-                "./images/Vegeta.webp"
+                "./images/Vegeta.webp",
+                enemigo.id
               );
             } else if (peleadorNombre === "Buu") {
               peleadorEnemigo = new Combatiente(
@@ -511,7 +518,8 @@ function enviarPosicion(x, y) {
                 "./images/majin buu.webp",
                 5,
                 "Zetsumetsu",
-                "./images/majin buu.webp"
+                "./images/majin buu.webp",
+                enemigo.id
               );
             }
 
@@ -607,7 +615,9 @@ function revisarColision(enemigo) {
 
   stopMove();
   clearInterval(intervalo);
-  // console.log("Se detectó una colision");
+  console.log("Se detectó una colision");
+
+  enemigoId = enemigo.id;
   sectionSeleccionarAtaque.style.display = "flex";
   sectionVerMapa.style.display = "none";
   seleccionarPeleadorEnemigo(enemigo);
