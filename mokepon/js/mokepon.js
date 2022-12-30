@@ -326,6 +326,22 @@ function enviarAtaques() {
       ataques: ataqueJugador,
     }),
   });
+  intervalo = setInterval(obtenerAtaques, 50);
+}
+
+function obtenerAtaques() {
+  fetch(`http://localhost:8080/peleador/${enemigoId}/ataques`).then(function (
+    res
+  ) {
+    if (res.ok) {
+      res.json().then(function ({ ataques }) {
+        if (ataques.length === 5) {
+          ataqueEnemigo = ataques;
+          combate();
+        }
+      });
+    }
+  });
 }
 
 function seleccionarPeleadorEnemigo(enemigo) {
@@ -376,6 +392,7 @@ function indexAmbosOponentes(jugador, enemigo) {
 }
 
 function combate() {
+  clearInterval(intervalo);
   //   COMBATE
   // 1-Bankoku
   // 2-BigBang

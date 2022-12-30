@@ -92,6 +92,14 @@ app.post("/peleador/:jugadorId/ataques", (req, res) => {
   res.end();
 });
 
+app.get("/peleador/:jugadorId/ataques", (req, res) => {
+  const jugadorId = req.params.jugadorId || "";
+  const jugador = jugadores.find((jugador) => jugador.id === jugadorId);
+  res.send({
+    ataques: jugador.ataques || [],
+  });
+});
+
 app.listen(8080, () => {
   console.log(`Servidor funcionando en el puerto ${port}`);
 });
